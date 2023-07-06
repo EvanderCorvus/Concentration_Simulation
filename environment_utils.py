@@ -1,0 +1,31 @@
+import numpy as np
+
+def force(x,y,U0,type='mexican'):
+    if type == 'mexican':
+        r = np.sqrt(x**2+y**2)
+        bool = r>0.5
+        fr = -64*U0*(r**2-0.25)
+        fr[bool] = 0
+        F_x = fr*x
+        F_y = fr*y
+        return F_x,F_y
+
+    
+class Box():
+    def __init__(self, width, height, center=None):
+        self.width = width
+        self.height = height
+        if center is None:
+            self.center = np.zeros(2)
+            self.centerX = 0
+            self.centerY = 0
+        else:
+            self.center = center
+            self.centerX = center[:,0]
+            self.centerY = center[:,1]
+    
+    def contains(self, state):
+        x, y = state[:, 0], state[:, 1]
+        bool = np.logical_and(np.logical_and(x > self.centerX-self.width/2, x < self.centerX+self.width/2),
+                              np.logical_and(y > self.centerY-self.height/2, y < self.centerY+self.height/2))
+        return bool
