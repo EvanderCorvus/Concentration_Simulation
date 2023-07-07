@@ -5,9 +5,8 @@ import shutil
 from matplotlib import patches
 
 class RLPlotter():
-    def __init__(self, logger, goal_area):
+    def __init__(self, logger):
         self.logger = logger
-        self.goal_area = goal_area
     
     def update_goal(self, goal_area):
         self.goal_area = goal_area

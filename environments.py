@@ -14,8 +14,7 @@ class BoxEnvironment1():
         x, y = self.state[:,0], self.state[:,1]
         theta = action[:,0]
         #thermal noise
-        noise = np.random.normal(np.zeros(self.agent_batch_size),np.ones(self.agent_batch_size)*np.sqrt(dt))
-        # raise Exception(theta.shape, noise.shape)
+        noise = np.random.normal(np.zeros(self.agent_batch_size), np.ones(self.agent_batch_size))
         theta = theta + np.sqrt(dt)*characteristic_length*noise
 
         e_x = np.cos(theta)
@@ -44,7 +43,6 @@ class BoxEnvironment1():
         wincondition = np.array(self.goal_check()).astype(int)
         reward += wincondition*1000
         reward -= not_inside_space*10
-        # reward -= np.linalg.norm(position-self.goal.center, axis=1)*10
 
         return reward
     
@@ -54,6 +52,6 @@ class BoxEnvironment1():
         return wincondition
 
 
-def compute_concentration(position, center, U0):
+def compute_concentration(position, center, c0):
     r = np.linalg.norm(position-center, axis=1)
-    return U0/(1+r)
+    return c0/(1+r)
