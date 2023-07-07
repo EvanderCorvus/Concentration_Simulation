@@ -1,19 +1,16 @@
 import numpy as np
 
 class BoxEnvironment1():
-    def __init__(self, space, goal):
+    def __init__(self, space):
         self.space = space
-        self.goal = goal
     
-    def init_state(self, agent_batch_size, state_dim):
+    def init_env(self, agent_batch_size, state_dim, goal):
         self.agent_batch_size = agent_batch_size
         self.state = np.zeros((agent_batch_size,state_dim))
         self.state[:,0] = -0.5*np.ones(agent_batch_size)
-
-    def update_goal(self, goal):
         self.goal = goal
     
-    def step(self, action, U0, dt, goal, characteristic_length = 1):
+    def step(self, action, U0, dt, characteristic_length = 1):
         x, y = self.state[:,0], self.state[:,1]
         theta = action[:,0]
         #thermal noise
@@ -36,11 +33,11 @@ class BoxEnvironment1():
         self.state[:,2] = concentration 
         
         # Compute reward
-        reward = self.reward(dt, np.array(inside_space).astype(int), self.state[:,0:2])
+        reward = self.reward(dt, np.array(inside_space).astype(int))
 
         return reward
     
-    def reward(self, dt, inside_space, position):
+    def reward(self, dt, inside_space):
         # Compute reward
         not_inside_space = np.logical_not(inside_space)
         reward = -dt*np.ones(self.state.shape[0])

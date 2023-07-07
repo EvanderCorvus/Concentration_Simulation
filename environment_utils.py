@@ -29,3 +29,9 @@ class Box():
         bool = np.logical_and(np.logical_and(x > self.centerX-self.width/2, x < self.centerX+self.width/2),
                               np.logical_and(y > self.centerY-self.height/2, y < self.centerY+self.height/2))
         return bool
+    
+    def sample(self):
+        x = np.random.uniform(self.centerX-self.width/2, self.centerX+self.width/2)
+        y = np.random.uniform(self.centerY-self.height/2, self.centerY+self.height/2)
+        # raise Exception(x.shape, y.shape)
+        return np.array([x,y])

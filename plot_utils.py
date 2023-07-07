@@ -8,6 +8,10 @@ class RLPlotter():
     def __init__(self, logger, goal_area):
         self.logger = logger
         self.goal_area = goal_area
+    
+    def update_goal(self, goal_area):
+        self.goal_area = goal_area
+
 
     def clear_plots(self):
         clear_folder('episode_losses_critic')
@@ -110,8 +114,7 @@ class RLPlotter():
     def plot_last_episode_paths(self):
         folder = os.path.join('logs', 'episode_paths')
         i = len(self.logger.episode_states) - 1
-        # x = np.array(self.logger.episode_states[i])[:,0,0]
-        # y = np.array(self.logger.episode_states[i])[:,0,1]
+
         x = np.array(self.logger.episode_states[i])[:,:,0]
         y = np.array(self.logger.episode_states[i])[:,:,1]
         plot_normalized_concentration(self.goal_area)
@@ -126,22 +129,20 @@ class RLPlotter():
         plt.savefig(os.path.join(folder, f'episode{i}_path.png'))
         plt.close()
 
-def plot_normalized_concentration(goal_area):
+def plot_normalized_concentration(goal_area, show=False):
     x,y = np.meshgrid(np.linspace(-1,1,100),np.linspace(-1,1,100))
-    r = np.sqrt((x-goal_area.centerX[0])**2+(y-goal_area.centerY[0])**2)
+    r = np.sqrt((x-goal_area.center[0][0])**2+(y-goal_area.center[0][1])**2)
     concentration = 1/(1+r)
 
     plt.xlim(-1,1)
     plt.ylim(-1,1)
-    # patches.Rectangle((goal_area.centerX-goal_area.width/2, goal_area.centerY-goal_area.height/2), goal_area.width, goal_area.height, color='black', fill=False, alpha=0.5, label='goal area')
     plt.imshow(concentration[:,],cmap = 'plasma',extent=[-1,1,-1,1],origin='lower')
     colorbar = plt.colorbar()
     colorbar.set_label(r'$c/c_0$',labelpad=10,fontsize = 20)
-
+    if show:
+        plt.show()
 
 def clear_folder(folder_name):
     folder = os.path.join('logs', folder_name)
     shutil.rmtree(folder, ignore_errors=True)
     os.makedirs(folder, exist_ok=True)
-
-
