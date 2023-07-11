@@ -32,7 +32,3 @@ class RLLogger():
     
     def save_action(self, action):
         self.actions.append(action[0])
-
-    
-
-        

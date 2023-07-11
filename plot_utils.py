@@ -130,12 +130,14 @@ class RLPlotter():
 
 def plot_normalized_concentration(goal_area, show=False):
     x,y = np.meshgrid(np.linspace(-1,1,100),np.linspace(-1,1,100))
+
     r = np.sqrt((x-goal_area.center[0][0])**2+(y-goal_area.center[0][1])**2)
+
     concentration = 1/(1+r)
 
     plt.xlim(-1,1)
     plt.ylim(-1,1)
-    plt.imshow(concentration[:,],cmap = 'plasma',extent=[-1,1,-1,1],origin='lower')
+    plt.imshow(concentration,cmap = 'plasma',extent=[-1,1,-1,1],origin='lower')
     colorbar = plt.colorbar()
     colorbar.set_label(r'$c/c_0$',labelpad=10,fontsize = 20)
     if show:

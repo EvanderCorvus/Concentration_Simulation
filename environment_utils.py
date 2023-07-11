@@ -35,3 +35,23 @@ class Box():
         y = np.random.uniform(self.centerY-self.height/2, self.centerY+self.height/2)
         # raise Exception(x.shape, y.shape)
         return np.array([x,y])
+
+class Circle2D():
+    def __init__(self, radius, center=None):
+        self.radius = radius
+        if center is None:
+            self.center = np.zeros(2)
+        else:
+            self.center = center
+
+    def contains(self, state):
+        x, y = state[:, 0], state[:, 1]
+        bool = np.sqrt((x-self.center[:,0])**2 + (y-self.center[:,1])**2) < self.radius
+        return bool
+    
+    def sample(self):
+        theta = np.random.uniform(0, 2*np.pi)
+        r = np.random.uniform(0, self.radius)
+        x = self.center[:,0] + r*np.cos(theta)
+        y = self.center[:,1] + r*np.sin(theta)
+        return np.array([x,y])
