@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import os
 import shutil
+from moviepy.editor import ImageSequenceClip
 
 class RLPlotter():
     def __init__(self, logger, path, test=False):
@@ -126,6 +127,7 @@ class RLPlotter():
         # plt.plot(x, y)
         plt.xlabel('x')
         plt.ylabel('y')
+        
         plt.title(f'Episode {i} Path')
         plt.savefig(os.path.join(folder, f'episode{i}_path.png'))
         plt.close()
@@ -149,3 +151,9 @@ def clear_folder(folder_name, path):
     folder = os.path.join(path, folder_name)
     shutil.rmtree(folder, ignore_errors=True)
     os.makedirs(folder, exist_ok=True)
+
+def make_animation(path, fps):
+    folder_path = path  # update this with the path to the folder containing your images
+    image_files = sorted([os.path.join(folder_path, img) for img in os.listdir(folder_path) if img.endswith(".png")])
+    clip = ImageSequenceClip(image_files, fps)  # adjust fps (frames per second) as needed
+    clip.write_videofile(str(path)+"_animation.mp4")  # save the animation to a file
