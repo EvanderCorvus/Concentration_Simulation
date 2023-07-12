@@ -45,7 +45,7 @@ class RLPlotter():
         plt.xlabel('Step')
         plt.ylabel('Loss Critic')
         plt.title(f'Episode {i} MSE')
-        plt.savefig(os.path.join(folder, f'episode{i}_losses_critic.png'))
+        plt.savefig(os.path.join(folder, f'episode{i:02}_losses_critic.png'))
         plt.close()
     
     def plot_last_episode_losses_actor(self):
@@ -56,7 +56,7 @@ class RLPlotter():
         plt.xlabel('Step')
         plt.ylabel('Loss Actor')
         plt.title(f'Episode {i} MSE')
-        plt.savefig(os.path.join(folder, f'episode{i}_losses_actor.png'))
+        plt.savefig(os.path.join(folder, f'episode{i:02}_losses_actor.png'))
         plt.close()
 
     def plot_last_losses_critic(self):
@@ -102,7 +102,7 @@ class RLPlotter():
         plt.xlabel('Step')
         plt.ylabel(r'Active Orientation $\theta$')
         plt.ylim(0,7)
-        plt.savefig(os.path.join(folder, f'episode{i}_actions.png'))
+        plt.savefig(os.path.join(folder, f'episode{i:02}_actions.png'))
         plt.close()
     
     def plot_last_episdode_actions_polar(self):
@@ -112,7 +112,7 @@ class RLPlotter():
         fig = plt.figure()
         ax = plt.subplot(111, polar=True)
         ax.scatter(self.logger.episode_actions[i], x, c=x, cmap = 'plasma')
-        fig.savefig(os.path.join(folder, f'episode{i}_actions_polar.png'))
+        fig.savefig(os.path.join(folder, f'episode{i:02}_actions_polar.png'))
         plt.close()
 
     def plot_last_episode_paths(self):
@@ -127,9 +127,9 @@ class RLPlotter():
         # plt.plot(x, y)
         plt.xlabel('x')
         plt.ylabel('y')
-        
+
         plt.title(f'Episode {i} Path')
-        plt.savefig(os.path.join(folder, f'episode{i}_path.png'))
+        plt.savefig(os.path.join(folder, f'episode{i:02}_path.png'))
         plt.close()
 
 def plot_normalized_concentration(goal, show=False):
