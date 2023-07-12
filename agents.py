@@ -64,7 +64,7 @@ class SACAgent(nn.Module):
         self.critic1 = QCritic(state_dim, act_dim, hidden_dims, activation)
         self.critic2 = QCritic(state_dim, act_dim, hidden_dims, activation)
 
-        def act(self, state, deterministic=False):
-            with tr.no_grad():
-                a, _ = self.actor(state, deterministic, False)
-                return a.cpu().numpy()
+    def act(self, state, deterministic=False):
+        with tr.no_grad():
+            a, _ = self.actor(state, deterministic, False)
+            return a.cpu().numpy()

@@ -16,7 +16,7 @@ class BoxEnvironment1():
         self.state[:,-1] = compute_concentration(self.state[:,0:2], self.goal.center, c0)
         
     
-    def step(self, action, c0, dt, characteristic_length = 1):
+    def step(self, action, c0, dt, characteristic_length = 1, test = False):
         x, y = self.state[:,0], self.state[:,1]
         theta = action[:,0]
         #thermal noise
@@ -38,9 +38,9 @@ class BoxEnvironment1():
         self.state[:,2] = concentration 
 
         # Compute reward
-        reward = self.reward(dt, np.array(inside_space).astype(int))
-
-        return reward
+        if not test:
+            reward = self.reward(dt, np.array(inside_space).astype(int))
+            return reward
     
     def reward(self, dt, inside_space):
         # Compute reward
